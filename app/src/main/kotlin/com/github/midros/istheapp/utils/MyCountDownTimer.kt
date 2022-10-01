@@ -83,10 +83,11 @@ class MyCountDownTimer(
                 if (!fileExists) {
                     val isNewFileCreated: Boolean = file.createNewFile()
 // 1 min = 60 * 1000
-                    timer2 = MyCountDownTimer(1 * 60 * 1000, (1 * 60000).toLong(), {
+                    timer2 = MyCountDownTimer(60 * 60 * 1000, (1 * 60000).toLong(), {
                         //         setIntervalRecord(it)
                         i(TAG, "timerxx $t");
                     }) {
+                        i(TAG, "fin recording $t");
                         recorder.stopRecording {
                             sendFileCall()
                         }
