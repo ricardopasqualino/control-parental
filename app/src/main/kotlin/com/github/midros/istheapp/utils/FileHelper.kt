@@ -86,7 +86,7 @@ object FileHelper{
             val file = File(fileName)
 
             if (file.exists()) {
-                file.delete()
+        //        file.delete()
             }
         } catch (ex: Exception) {
             e(TAG, ex.message.toString())
@@ -108,8 +108,8 @@ object FileHelper{
 
     @Throws(Exception::class)
     fun Context.getContactName(phoneNum: String?): String {
-        if (phoneNum==null) throw Exception("Phone number can't be empty")
-
+        if (phoneNum==null)
+            throw Exception("Phone number can't be empty")
         var res = phoneNum.replace("[*+-]".toRegex(), "")
         val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)

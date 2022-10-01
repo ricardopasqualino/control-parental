@@ -33,9 +33,12 @@ class HiddenCameraService(private val context: Context, private val cameraCallba
         } else if (cameraConfig.facing == CameraFacing.FRONT_FACING_CAMERA && !context.isFrontCameraAvailable()) {
             cameraCallbacks.onCameraError(CameraError.ERROR_DOES_NOT_HAVE_FRONT_CAMERA)
         } else {
-            if (mCameraPreview == null) mCameraPreview = addPreView()
+            if (mCameraPreview == null)
+                mCameraPreview = addPreView()
             mCameraPreview!!.startCameraInternal(cameraConfig)
-            Handler().postDelayed({ takePicture() }, 2000)
+            Handler().postDelayed({
+                takePicture()
+                                  }, 2000)
         }
     }
 

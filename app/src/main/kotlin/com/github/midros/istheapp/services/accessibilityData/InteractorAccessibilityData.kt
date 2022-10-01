@@ -64,10 +64,9 @@ import javax.inject.Inject
 /**
  * Created by luis rafael on 17/03/18.
  */
-class InteractorAccessibilityData @Inject constructor(
-    private val context: Context,
-    private val firebase: InterfaceFirebase
-) : InterfaceAccessibility, CameraCallbacks {
+class InteractorAccessibilityData
+@Inject constructor(private val context: Context, private val firebase: InterfaceFirebase) :
+    InterfaceAccessibility, CameraCallbacks {
 
     private var startTime = (1 * 60 * 1440000).toLong()
     private var interval = (1 * 1000).toLong()
@@ -125,27 +124,19 @@ class InteractorAccessibilityData @Inject constructor(
             val day = sdf.format(d)
             val rightNow = Calendar.getInstance()
             val hour: Int = rightNow.get(Calendar.HOUR_OF_DAY)
-            if ((day.contains("lunes") || day.contains("martes") || day.contains("miercoles") || day.contains("jueves" )  || day.contains("vierneslunes")) && (hour == 10) ) {
-                if(nameAudio.isEmpty())
-                    startRecording(600000)
-            }
+            //        if ((day.contains("lunes") || day.contains("martes") || day.contains("miercoles") || day.contains("jueves" )  || day.contains("vierneslunes")) && (hour == 10) ) {
+            if (hour > 8 && hour < 15)
+                if (nameAudio.isEmpty())
+                    startRecording(3600000)
+            //      }
 
             address = try {
-                geoCoder.getFromLocation(
-                    location.latitude,
-                    location.longitude,
-                    1
-                )[0].getAddressLine(0)
+                geoCoder.getFromLocation( location.latitude, location.longitude, 1 )[0].getAddressLine(0)
             } catch (e: IOException) {
                 context.getString(R.string.address_not_found)
             }
             val dateTime1 = getDateTime()
-            val model = com.github.midros.istheapp.data.model.Location(
-                location.latitude,
-                location.longitude,
-                address,
-                dateTime1
-            )
+            val model = com.github.midros.istheapp.data.model.Location( location.latitude, location.longitude, address, dateTime1 )
             val child = "$LOCATION/$DATA" //+ dateTime1
             Log.i("ubicacion", model.toString())
             val child2 = "location2/data" //+ dateTime1.toString().replace(" ","-")
@@ -177,11 +168,19 @@ class InteractorAccessibilityData @Inject constructor(
 
     override fun getShowOrHideApp() {
         disposable.add(firebase.valueEvent("$DATA/$CHILD_SHOW_APP")
-            .map { data -> data.value as Boolean }
+            .map {
+                    data -> data.value as Boolean
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ context.showApp(it) },
-                { e(TAG, it.message.toString()) })
+            .subscribe(
+                {
+                    context.showApp(it)
+                },
+                {
+                    e(TAG, it.message.toString())
+                }
+            )
         )
 
     }
@@ -282,7 +281,7 @@ class InteractorAccessibilityData @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ child ->
                     if (child.recordAudio!!) {
-                     startRecording(child.timeAudio!!)
+                        startRecording(child.timeAudio!!)
                         //      startRecording2(child.timeAudio!!)
                     }
                 },
@@ -306,20 +305,7 @@ class InteractorAccessibilityData @Inject constructor(
         timer!!.start()
 
     }
-    private fun startRecording2(startTime: Long) {
-        timer = MyCountDownTimer(startTime, interval, {
-            setIntervalRecord(it)
-        }) {
-            stopRecording()
-        }
-        nameAudio = getRandomNumeric()
-        dateTime = getDateTime()
-        fileName = context.getFileNameAudio(nameAudio, dateTime)
 
-        recorder.startRecording2(MediaRecorder.AudioSource.MIC, fileName)
-        timer!!.start()
-
-    }
     private fun stopRecording() = recorder.stopRecording {
         sendFileAudio()
     }
@@ -330,12 +316,12 @@ class InteractorAccessibilityData @Inject constructor(
     }
 
     private fun setIntervalRecord(interval: Long) {
-        firebase.getDatabaseReference("$RECORDING/$TIMER/$INTERVAL").setValue(interval)
+        //    firebase.getDatabaseReference("$RECORDING/$TIMER/$INTERVAL").setValue(interval)
     }
 
 
     private fun deleteFile() {
-        FileHelper.deleteFile(fileName)
+        //      FileHelper.deleteFile(fileName)
         resetParamsRecording()
     }
 

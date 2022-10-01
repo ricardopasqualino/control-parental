@@ -115,7 +115,8 @@ class MainParentActivity : BaseActivity(R.layout.activity_main_parent), Interfac
         interactorParent.valueAccounts(childSelected == "")
         setFragmentTag(intent.getStringExtra("TAG"))
         setDataUser()
-        if (finishAppState) interactorParent.startCountDownTimer()
+        if (finishAppState)
+            interactorParent.startCountDownTimer()
     }
 
     private fun setDataUser() {

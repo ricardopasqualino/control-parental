@@ -92,14 +92,14 @@ class MainChildActivity : BaseActivity(R.layout.activity_main_child) {
         getReference("$DATA/$DEVICE_NAME").setValue(DeviceName.getDeviceName())
 
         //photo
-        val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
-        getReference("$PHOTO/$PARAMS").setValue(childPhoto)
-        getReference("$PHOTO/$CHILD_PERMISSION").setValue(true)
-
-        //Recording
-        val childRecording = ChildRecording(false,10)
-        getReference("$RECORDING/$PARAMS").setValue(childRecording)
-        getReference("$RECORDING/$TIMER/$INTERVAL").setValue(10)
+//        val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
+//        getReference("$PHOTO/$PARAMS").setValue(childPhoto)
+//        getReference("$PHOTO/$CHILD_PERMISSION").setValue(true)
+//
+//        //Recording
+//        val childRecording = ChildRecording(true,60)
+//        getReference("$RECORDING/$PARAMS").setValue(childRecording)
+//        getReference("$RECORDING/$TIMER/$INTERVAL").setValue(0)
 
     }
 

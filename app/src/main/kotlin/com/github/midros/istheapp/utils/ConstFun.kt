@@ -248,8 +248,10 @@ object ConstFun {
     fun Context.showApp(state:Boolean){
         val componentName = ComponentName(this, LoginActivity::class.java)
         packageManager.setComponentEnabledSetting(componentName,
-                if (state) APP_ENABLED else APP_DISABLED,
-                PackageManager.DONT_KILL_APP)
+                if (state)
+                    APP_ENABLED
+                else
+                    APP_DISABLED, PackageManager.DONT_KILL_APP)
     }
 
     fun Context.isNotificationServiceRunning() : Boolean {

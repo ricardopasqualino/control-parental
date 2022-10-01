@@ -47,14 +47,15 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
     private var fragmentPrevious: Fragment? = null
 
     override fun initializeCountDownTimer() {
-        myCountDownTimer = MyCountDownTimer(
-            startTime,
-            interval
-        ) { if (getView() != null) getView()!!.onFinishCount() }
+        myCountDownTimer = MyCountDownTimer(  startTime,  interval ) {
+            if (getView() != null)
+                getView()!!.onFinishCount()
+        }
     }
 
     override fun startCountDownTimer() {
-        if (myCountDownTimer != null) myCountDownTimer?.start()
+        if (myCountDownTimer != null)
+            myCountDownTimer?.start()
     }
 
     override fun restartCountDownTimer() {

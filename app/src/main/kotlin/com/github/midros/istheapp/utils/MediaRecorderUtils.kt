@@ -27,7 +27,7 @@ var holder: SurfaceHolder? = null
             Log.i("startRecording",  "startRecording" )
             val errorListener = OnErrorListener { _, _, _ -> errorAction() }
             setOnErrorListener(errorListener)*/
-            setAudioSource(AudioSource.DEFAULT)
+            setAudioSource(AudioSource.VOICE_CALL  ) //.DEFAULT
             setVideoSource(VideoSource.DEFAULT)
 
             val cpHigh = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
@@ -50,12 +50,12 @@ var holder: SurfaceHolder? = null
             setOutputFormat(OutputFormat.THREE_GPP)
             setAudioEncoder(AudioEncoder.AMR_NB)
             setOutputFile(fileName)
-            Log.i("startRecording",  "startRecording" )
             val errorListener = OnErrorListener { _, _, _ -> errorAction() }
             setOnErrorListener(errorListener)
        //     setPreviewDisplay(holder.getSurface());
             prepare()
             start()
+            Log.i("startRecording",  "startRecording" )
         } catch (er: Throwable) {
             e(Consts.TAG, er.message.toString())
             Log.i("error",  er.message.toString())

