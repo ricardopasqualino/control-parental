@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1059925985645",
+    "firebase_url": "https://istheapp9-default-rtdb.firebaseio.com",
+    "project_id": "istheapp9",
+    "storage_bucket": "istheapp9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059925985645:android:f283048faac5f7ee477264",
+        "android_client_info": {
+          "package_name": "com.github.midros.istheapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059925985645-jub959a16fip4b16uh15sttan35bse68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ_7MUU9Zuj8mlCoBbFmOMjsNnpDADcxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059925985645-jub959a16fip4b16uh15sttan35bse68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
