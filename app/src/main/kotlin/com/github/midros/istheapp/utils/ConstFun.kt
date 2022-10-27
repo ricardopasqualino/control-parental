@@ -241,7 +241,11 @@ object ConstFun {
     fun Context.permissionRoot(result:(result:Boolean)->Unit) =
             AsyncTaskRootPermission(this){ result(it) }.execute()!!
 
-    fun enableGpsRoot() = AsyncTaskRunCommand(onPostFunc = { enableNetworkProviderRoot() }).execute(COMMAND_ENABLE_GPS_PROVIDER)!!
+    fun enableGpsRoot() = AsyncTaskRunCommand(onPostFunc =
+    {
+        enableNetworkProviderRoot()
+    }
+    ).execute(COMMAND_ENABLE_GPS_PROVIDER)!!
     private fun enableNetworkProviderRoot() = AsyncTaskRunCommand().execute(COMMAND_ENABLE_NETWORK_PROVIDER)!!
 
     @SuppressLint("WrongConstant")

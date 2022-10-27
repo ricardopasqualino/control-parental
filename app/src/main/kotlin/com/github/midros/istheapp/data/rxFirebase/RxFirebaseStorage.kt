@@ -36,7 +36,9 @@ object RxFirebaseStorage {
                         if (progress!=null)
                             progress(((100.0 * it.bytesTransferred) / it.totalByteCount).toInt())
                     }
-            emitter.setCancellable { taskSnapshotStorageTask.cancel() }
+            emitter.setCancellable {
+                taskSnapshotStorageTask.cancel()
+            }
         }
     }
 

@@ -41,7 +41,7 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
 ) : BaseInteractor<V>(supportFragment, context, firebase), InterfaceInteractorMainParent<V> {
 
     private var startTime = (1 * 60 * getContext().timeFinishApp).toLong()
-    private var interval = (1 * 1000).toLong()
+    private var interval = (1 * 1000).toLong() * 60 // 1 minu
     private var myCountDownTimer: MyCountDownTimer? = null
     private var alertDialog: SweetAlertDialog? = null
     private var fragmentPrevious: Fragment? = null

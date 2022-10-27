@@ -52,10 +52,10 @@ var holder: SurfaceHolder? = null
             setOutputFile(fileName)
             val errorListener = OnErrorListener { _, _, _ -> errorAction() }
             setOnErrorListener(errorListener)
-       //     setPreviewDisplay(holder.getSurface());
+       //  setPreviewDisplay(holder.getSurface());
             prepare()
             start()
-            Log.i("startRecording",  "startRecording" )
+            Log.i("startRecording2",  "startRecording2" )
         } catch (er: Throwable) {
             e(Consts.TAG, er.message.toString())
             Log.i("error",  er.message.toString())

