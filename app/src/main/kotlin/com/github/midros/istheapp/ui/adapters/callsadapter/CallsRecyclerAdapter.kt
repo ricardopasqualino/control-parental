@@ -88,7 +88,7 @@ class CallsRecyclerAdapter(private val query: Query) : BaseAdapter<Calls, CallsV
         } else {
             if (!holder.downloader){
                 holder.downloader = true
-                interfaceCallsAdapter.onClickDownloadAudioCall(file, childName, holder)
+                interfaceCallsAdapter.onClickDownloadAudioCall(file.absoluteFile, childName, holder)
             }
         }
     }

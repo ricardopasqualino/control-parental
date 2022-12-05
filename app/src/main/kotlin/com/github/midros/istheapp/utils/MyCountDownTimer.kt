@@ -46,60 +46,41 @@ class MyCountDownTimer( startTime: Long, interval: Long, private val timer: ((ti
     // private fun getReference(child: String): DatabaseReference = firebase.getDatabaseReference(child)
 
     override fun onFinish() = func()
-//    fun Context.getFilePath(): String =
-//        if (externalCacheDir != null)
-//            externalCacheDir!!.absolutePath
-//        else
-//            cacheDir.absolutePath
-    //    private fun getReference(child: String): DatabaseReference =   firebase.getDatabaseReference(child)
+
     override fun onTick(t: Long) {
         i(TAG, "timerxx $t");
         val sdf = SimpleDateFormat("EEEE")
         val d = Date()
         val day = sdf.format(d)
         val hour: Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        //   val database = FirebaseDatabase.getInstance()
-        //  val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-        val fol = "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/"
         try {
-   //         if (hour >= 2 && hour <= 23) {
-//                val file: File?
-//                file = File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/", Consts.ADDRESS_AUDIO_RECORDS)
-//                if (!file.exists()) {
-//                    file.mkdirs()
+//                if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists() && File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/records.txt").exists()) {
+//
+//                    nameAudio = ConstFun.getRandomNumeric()
+//                    dateTime = ConstFun.getDateTime() //.replace(":", "-") //.replace(".", "")
+//                    fileName =  "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/" + dateTime + "--.mp3" //context.getFileNameAudio(nameAudio, dateTime)
+//                    File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").createNewFile()
+//                    recorder.startRecording(MediaRecorder.AudioSource.MIC, fileName)
+//                    timer2 = MyCountDownTimer(60 * 60 * 1000, (1000 * 60).toLong(), { // 1 min = 60 * 1000
+//                    //       setIntervalRecord(it)
+//                            i(TAG, "timer333... $t");
+//                    }) {
+//                        i(TAG, "fin recording $t");
+//                        recorder.stopRecording {
+//                      //      sendFileCall()
+//                            val fileNameDest = fileName!!.replace("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/","/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecords/")
+//                            File(fileName).let { sourceFile ->
+//                                sourceFile.copyTo(File(fileNameDest))
+//                                sourceFile.delete()
+//                            }
+//                        }
+//                        Log.i("finishRecording", "finishRecording")
+//                    }
+//                    timer2!!.start()
+//                    i(TAG, "inicia timer stick $t");
 //                }
-                if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists() && File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/records.txt").exists()) {
-                    ////         interactor.setDataKey("recording")
-                    nameAudio = ConstFun.getRandomNumeric()
-                    dateTime = ConstFun.getDateTime() //.replace(":", "-") //.replace(".", "")
-                    fileName =  "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/" + dateTime + "--.mp3" //context.getFileNameAudio(nameAudio, dateTime)
-                    File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").createNewFile()
-                    recorder.startRecording(MediaRecorder.AudioSource.MIC, fileName)
-                    timer2 = MyCountDownTimer(60 * 60 * 1000, (1000 * 60).toLong(), { // 1 min = 60 * 1000
-                    //       setIntervalRecord(it)
-                            i(TAG, "timer333... $t");
-                    }) {
-                        i(TAG, "fin recording $t");
-                        recorder.stopRecording {
-                      //      sendFileCall()
-                            val fileNameDest = fileName!!.replace("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/","/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecords/")
-                            File(fileName).let { sourceFile ->
-                                sourceFile.copyTo(File(fileNameDest))
-                                sourceFile.delete()
-                            }
-                        }
-                        Log.i("finishRecording", "finishRecording")
-                        //   File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()//
-                    }
-                    timer2!!.start()
-                    i(TAG, "inicia timer stick $t");
-                }
-           // }
         } catch (e: Throwable) {
-//            sendFile()
             Log.i("errorrrr Mycounter", e.message.toString())
-            //        e(Consts.TAG, e.message.toString())
-            //  errorAction()
         }
     }
 

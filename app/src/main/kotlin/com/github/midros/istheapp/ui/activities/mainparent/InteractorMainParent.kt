@@ -132,7 +132,9 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
                             R.string.upload_photo_child,
                             null,
                             null
-                        ) { show() }
+                        ) {
+                            show()
+                        }
                     }
                 }
                 .subscribe({ task ->
@@ -142,7 +144,10 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
                         getDatabaseReference("$DATA/$CHILD_PHOTO").setValue(url)
                         if (isNullView()) getView()!!.successResult(true)
                     }.addOnFailureListener { if (isNullView()) getView()!!.failedResult(it) }
-                }, { if (isNullView()) getView()!!.failedResult(it) })
+                }, {
+                    if (isNullView())
+                        getView()!!.failedResult(it)
+                })
         )
     }
 

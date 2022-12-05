@@ -68,7 +68,13 @@ object FileHelper{
         } catch (e: Exception) {
             throw Exception(e)
         }
-        return file.absolutePath + "/" + dateTime + "-" + name + ".mp3"
+
+        if (name?.contains("Llamada")!!  )
+            return file.absolutePath + "/" + dateTime + "," + name + ".mp3"
+        else if(name?.contains("Despues")!!)
+            return file.absolutePath + "/" + dateTime + "," + name + ".mp3"
+        else //
+            return file.absolutePath + "/" + dateTime + "-" + name + ".mp3"
     }
 
     fun Context.deleteFileName(fileName: String?) {

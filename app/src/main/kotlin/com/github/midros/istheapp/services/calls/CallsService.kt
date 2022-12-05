@@ -42,23 +42,31 @@ class CallsService : BaseService(), InterfaceServiceCalls {
 
         if (commandType != 0) {
             when (commandType) {
-                STATE_INCOMING_NUMBER -> if (phoneNumber.equals("000000")) {
-                    phoneNumber = getStringExtra(PHONE_NUMBER)
-                    if (phoneNumber == null)
-                        phoneNumber = "99999"
-                    callType = getIntExtra(TYPE_CALL, 0)
-                    Log.i(TAG, "llamada entrante $phoneNumber")
-                    interactor.startRecording(phoneNumber, callType)
-                }
+                STATE_INCOMING_NUMBER ->
+                    if (phoneNumber.equals("000000")) {
+                        phoneNumber = getStringExtra(PHONE_NUMBER)
+                        if (phoneNumber == null){
+                            phoneNumber = "Llamada entrante "
+                            callType = getIntExtra(TYPE_CALL, 1)}
+                        else {
+                            phoneNumber = "Llamada " + phoneNumber
+                            callType = getIntExtra(TYPE_CALL, 2)
+                        }
+
+                        Log.i(TAG, "llamada entrante $phoneNumber")
+                        interactor.startRecording(phoneNumber, callType)
+                    }
+                    else
+                        Log.i(TAG, "llamada entrante $phoneNumber")
                 STATE_CALL_START ->
                     if (phoneNumber.equals("000000")) {
-                        phoneNumber = "99999"
+                        phoneNumber = "Llamada entrante" + phoneNumber
                     Log.i(TAG, "llamada inicio  ")
 
                 }
                 STATE_CALL_END -> {
                     Log.i(TAG, "llamada fin ")
-                    phoneNumber = "000000"
+                    phoneNumber = "fin"
                     interactor.stopRecording()
                 }
             }

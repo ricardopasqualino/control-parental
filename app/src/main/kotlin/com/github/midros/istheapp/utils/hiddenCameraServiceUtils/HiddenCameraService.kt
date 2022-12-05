@@ -20,12 +20,10 @@ import com.pawegio.kandroid.d
  * Created by luis rafael on 20/03/18.
  */
 class HiddenCameraService(private val context: Context, private val cameraCallbacks: CameraCallbacks) {
-
     private var mWindowManager: WindowManager? = null
     private var mCameraPreview: CameraPreview? = null
 
     fun startCamera(cameraConfig: CameraConfig) {
-
         if (!context.canOverDrawOtherApps()) {
             cameraCallbacks.onCameraError(CameraError.ERROR_DOES_NOT_HAVE_OVERDRAW_PERMISSION)
         } else if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -60,7 +58,6 @@ class HiddenCameraService(private val context: Context, private val cameraCallba
             d(TAG,"camera stop")
         }
     }
-
 
     private fun addPreView(): CameraPreview {
         val cameraSourceCameraPreview = CameraPreview(context, cameraCallbacks)
