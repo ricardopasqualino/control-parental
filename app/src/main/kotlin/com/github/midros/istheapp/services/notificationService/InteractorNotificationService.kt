@@ -62,7 +62,6 @@ class InteractorNotificationService @Inject constructor(
         image: Bitmap?
     ) {
         if (image != null) {
-
             val imageFile = image.getFileNameBitmap(context, nameImage!!)
             val uri = Uri.fromFile(File(imageFile))
             disposable.add(
@@ -74,25 +73,17 @@ class InteractorNotificationService @Inject constructor(
                             setData(type, text, title, nameImage, it.result.toString())
                             FileHelper.deleteFile(imageFile)
                         }
-                    }, { error ->
-                        e(Consts.TAG, error.message.toString())
+                    }, {
+                        error -> e(Consts.TAG, error.message.toString())
                         FileHelper.deleteFile(imageFile)
                     })
             )
-
         } else
             setData(type, text, title, "-", "-")
     }
 
-    private fun setData(
-        type: Int,
-        text: String?,
-        title: String?,
-        nameImage: String?,
-        urlImage: String?
-    ) {
+    private fun setData( type: Int,  text: String?,  title: String?,  nameImage: String?,  urlImage: String?  ) {
         val message = NotificationMessages(text, title, type, getDateTime(), nameImage, urlImage)
         firebase.getDatabaseReference("$NOTIFICATION_MESSAGE/$DATA").push().setValue(message)
     }
-
 }

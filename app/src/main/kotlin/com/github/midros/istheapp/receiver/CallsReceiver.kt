@@ -27,7 +27,8 @@ class CallsReceiver : BroadcastReceiver() {
         if (intent.action == Intent.ACTION_NEW_OUTGOING_CALL || intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
             phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
             extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
-            if (!context.typeApp) context.startCallService(intent)
+            if (!context.typeApp)
+                context.startCallService(intent)
         }
     }
 
@@ -41,7 +42,8 @@ class CallsReceiver : BroadcastReceiver() {
                     setIntentType(STATE_CALL_END)
                 }
                 TelephonyManager.EXTRA_STATE_RINGING -> {
-                    if (phoneNumber == null) phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+                    if (phoneNumber == null)
+                        phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
                     setIntent(TYPE_CALL_INCOMING)
                 }
             }

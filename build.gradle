@@ -11,7 +11,8 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+  //      jcenter()
+        mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
@@ -27,12 +28,13 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
+
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven { url 'https://jitpack.io' }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
         maven { url 'https://maven.google.com/' }
-    //    maven { url "https://dl.bintray.com/romancha/romancha-repo" }
-        mavenCentral()
+  //      maven { url "https://dl.bintray.com/romancha/romancha-repo" }
     }
 
     ext {

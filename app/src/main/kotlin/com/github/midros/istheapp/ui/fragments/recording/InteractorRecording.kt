@@ -85,7 +85,6 @@ class InteractorRecording<V: InterfaceViewRecording> @Inject constructor(support
     override fun failedResult(error: DatabaseError) {
         if (getView()!=null) getView()!!.failedResult(Throwable(error.message))
     }
-
     @SuppressLint("CheckResult")
     override fun onCheckPermissionAudioRecord(key:String?,file: File, childName: String, fileName: String, holder: RecordingViewHolder,position:Int) {
         getView()!!.getPermissions()!!.requestEachCombined(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -101,9 +100,10 @@ class InteractorRecording<V: InterfaceViewRecording> @Inject constructor(support
                                 recyclerAdapter!!.onClickListener(holder,file,fileName,childName)
                         }
                     }
-                },{error -> e(TAG,error.message.toString())})
+                },{
+                        error -> e(TAG,error.message.toString())
+                })
     }
-
     override fun onClickDownloadAudioRecord(file: File, childName: String, holder: RecordingViewHolder) {
         getView()!!.addDisposable(firebase().getFile("$RECORDING/$childName",file) {
             setProgressDownloader(it,holder)

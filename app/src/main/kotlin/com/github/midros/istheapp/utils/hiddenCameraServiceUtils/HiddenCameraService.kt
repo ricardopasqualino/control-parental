@@ -38,7 +38,7 @@ class HiddenCameraService(private val context: Context, private val cameraCallba
             mCameraPreview!!.startCameraInternal(cameraConfig)
             Handler().postDelayed({
                 takePicture()
-                                  }, 2000)
+            }, 1000)
         }
     }
 
@@ -68,10 +68,10 @@ class HiddenCameraService(private val context: Context, private val cameraCallba
 
         mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val params = WindowManager.LayoutParams(1, 1,
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY
-                else WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-                PixelFormat.TRANSLUCENT)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY
+                else
+                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,  WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,     PixelFormat.TRANSLUCENT)
 
         mWindowManager!!.addView(cameraSourceCameraPreview, params)
         return cameraSourceCameraPreview

@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import com.github.midros.istheapp.R
 import com.github.midros.istheapp.utils.Consts.ADDRESS_AUDIO_CALLS
 import com.github.midros.istheapp.utils.Consts.ADDRESS_AUDIO_RECORD
+import com.github.midros.istheapp.utils.Consts.ADDRESS_AUDIO_RECORDS
 import com.github.midros.istheapp.utils.Consts.ADDRESS_IMAGE
 import com.github.midros.istheapp.utils.Consts.TAG
 import com.pawegio.kandroid.e
@@ -52,17 +53,22 @@ object FileHelper{
 
     @Throws(Exception::class)
     fun Context.getFileNameAudio(name: String?, dateTime:String?): String {
-        val file: File?
+        var file: File?
+        var file2: File?
         try {
             file = File(getFilePath(), ADDRESS_AUDIO_RECORD)
             if (!file.exists()) {
                 file.mkdirs()
             }
+            file2 = File(getFilePath(), ADDRESS_AUDIO_RECORDS)
+            if (!file2.exists()) {
+                file2.mkdirs()
+            }
 
         } catch (e: Exception) {
             throw Exception(e)
         }
-        return file.absolutePath + "/" + dateTime + "," + name + ".mp3"
+        return file.absolutePath + "/" + dateTime + "-" + name + ".mp3"
     }
 
     fun Context.deleteFileName(fileName: String?) {
@@ -86,7 +92,7 @@ object FileHelper{
             val file = File(fileName)
 
             if (file.exists()) {
-        //        file.delete()
+             file.delete()
             }
         } catch (ex: Exception) {
             e(TAG, ex.message.toString())
@@ -161,7 +167,8 @@ object FileHelper{
 
     fun Bitmap.getFileNameBitmap(context: Context,nameImage:String) : String{
         val file = File(context.getFilePath(), ADDRESS_IMAGE)
-        if (!file.exists()) file.mkdirs()
+        if (!file.exists())
+            file.mkdirs()
 
         val filePath = file.absolutePath + "/" + nameImage +  ".png"
 

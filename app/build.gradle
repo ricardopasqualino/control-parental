@@ -119,7 +119,6 @@ dependencies {
 
     //root
     implementation 'com.chrisplus.rootmanager:library:2.0.5@aar'
-
     //deviceName
     implementation 'com.jaredrummler:android-device-names:1.1.9'
 

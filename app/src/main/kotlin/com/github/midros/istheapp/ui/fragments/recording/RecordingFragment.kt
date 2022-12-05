@@ -115,7 +115,8 @@ class RecordingFragment : BaseFragment(R.layout.fragment_recording), InterfaceVi
             viewFailed.hide()
             list.hide()
             appBar.setExpanded(true)
-            if (filter) { viewProgress.show() ; viewNotHave.hide() }
+            if (filter) { viewProgress.show() ;
+                viewNotHave.hide() }
             else{
                 viewProgress.hide()
                 viewNotHave.show()
@@ -157,7 +158,8 @@ class RecordingFragment : BaseFragment(R.layout.fragment_recording), InterfaceVi
 
     private fun recyclerPosition(){
         appBar.setExpanded(true)
-        if (recyclerAdapter!=null) list.scrollToPosition(recyclerAdapter!!.itemCount-1)
+        if (recyclerAdapter!=null)
+            list.scrollToPosition(recyclerAdapter!!.itemCount-1)
     }
 
     override fun setValueState(dataSnapshot: DataSnapshot) {

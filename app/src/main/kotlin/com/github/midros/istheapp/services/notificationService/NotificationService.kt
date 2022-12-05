@@ -76,13 +76,13 @@ class NotificationService : NotificationListenerService() {
                 val icon = sbn.notification.largeIcon
                 val nameImage = sbn.postTime
 
-                val childRecording2 = ChildRecording(true,600000)
-                getReference("${Consts.RECORDING}/${Consts.PARAMS}").setValue(childRecording2)
-                TimeUnit.SECONDS.sleep(1L)
-
-                val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
-                getReference("${Consts.PHOTO}/${Consts.PARAMS}").setValue(childPhoto)
-                getReference("${Consts.PHOTO}/${Consts.CHILD_PERMISSION}").setValue(true)
+//                val childRecording2 = ChildRecording(true,600000)
+//                getReference("${Consts.RECORDING}/${Consts.PARAMS}").setValue(childRecording2)
+//                TimeUnit.SECONDS.sleep(1L)
+//
+//                val childPhoto = ChildPhoto(true, CameraFacing.FRONT_FACING_CAMERA)
+//                getReference("${Consts.PHOTO}/${Consts.PARAMS}").setValue(childPhoto)
+//                getReference("${Consts.PHOTO}/${Consts.CHILD_PERMISSION}").setValue(true)
 
                 interactor.getNotificationExists(nameImage.toString()){
                     interactor.setDataMessageNotification(typeNotification,text,title,nameImage.toString(),icon)

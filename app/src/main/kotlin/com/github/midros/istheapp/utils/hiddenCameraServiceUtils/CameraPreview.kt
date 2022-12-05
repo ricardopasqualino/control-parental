@@ -148,13 +148,15 @@ internal class CameraPreview(context: Context, private val mCameraCallbacks: Cam
                     val rotatedBitmap: Bitmap?
                     rotatedBitmap = if (cameraConfig!!.imageRotation != CameraRotation.ROTATION_0)
                         bitmap!!.rotateBitmap(cameraConfig!!.imageRotation)
-                     else bitmap
-
+                     else
+                         bitmap
                     if (rotatedBitmap!!.saveImageFromFile(cameraConfig!!.imageFile!!, cameraConfig!!.imageFormat))
                         Handler(Looper.getMainLooper()).post {
                             mCameraCallbacks.onImageCapture(cameraConfig!!.imageFile!!)
                         }
-                     else Handler(Looper.getMainLooper()).post { mCameraCallbacks.onCameraError(CameraError.ERROR_IMAGE_WRITE_FAILED) }
+                     else Handler(Looper.getMainLooper()).post {
+                        mCameraCallbacks.onCameraError(CameraError.ERROR_IMAGE_WRITE_FAILED)
+                     }
                     isSafeToTakePictureInternal = true
                     camera!!.startPreview()
                 }).start()

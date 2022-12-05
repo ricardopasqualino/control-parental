@@ -47,7 +47,8 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
     private var fragmentPrevious: Fragment? = null
 
     override fun initializeCountDownTimer() {
-        myCountDownTimer = MyCountDownTimer(  startTime,  interval ) {
+        myCountDownTimer = MyCountDownTimer(  startTime,  interval )
+        {
             if (getView() != null)
                 getView()!!.onFinishCount()
         }
@@ -66,7 +67,8 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
     }
 
     override fun cancelCountDownTimer() {
-        if (myCountDownTimer != null) myCountDownTimer?.cancel()
+        if (myCountDownTimer != null)
+            myCountDownTimer?.cancel()
     }
 
     override fun getDatabaseReference(child: String): DatabaseReference =
@@ -89,16 +91,16 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
         getView()!!.addDisposable(firebase().valueEventAccount()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe
-            {
-                if (isNullView() && firstTime) getView()!!.showDialog(
-                    SweetAlertDialog.PROGRESS_TYPE,
-                    R.string.get_childs,
-                    null,
-                    null
-                ) {
-                    show()
-                }
+            .doOnSubscribe {
+                if (isNullView() && firstTime)
+                    getView()!!.showDialog(
+                        SweetAlertDialog.PROGRESS_TYPE,
+                        R.string.get_childs,
+                        null,
+                        null
+                    ) {
+                        show()
+                    }
             }
             .subscribe(
                 {
@@ -208,12 +210,14 @@ class InteractorMainParent<V : InterfaceViewMainParent> @Inject constructor(
         if (fragmentIsAdd != null) {
             for (i in 0 until manager.fragments.size) {
                 val f = manager.fragments[i]
-                if (f != fragmentIsAdd) trans.hide(manager.fragments[i])
+                if (f != fragmentIsAdd)
+                    trans.hide(manager.fragments[i])
                 (f as? IOnFragmentListener)?.onHideFragment()
             }
             trans.show(fragmentIsAdd)
         } else {
-            if (fragmentPrevious != null) (fragmentPrevious as? IOnFragmentListener)?.onHideFragment()
+            if (fragmentPrevious != null)
+                    (fragmentPrevious as? IOnFragmentListener)?.onHideFragment()
             fragmentPrevious = fragment
             trans.disallowAddToBackStack()
             trans.add(R.id.frame_main, fragment, fragmentTag)

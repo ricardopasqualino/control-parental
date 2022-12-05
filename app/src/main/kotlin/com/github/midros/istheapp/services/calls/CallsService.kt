@@ -17,7 +17,7 @@ import javax.inject.Inject
 class CallsService : BaseService(), InterfaceServiceCalls {
     private val TAG = "istheapp"
 
-    private var phoneNumber: String? = null
+    private var phoneNumber: String? = "000000"
     private var callType = 0
 
     @Inject
@@ -42,18 +42,23 @@ class CallsService : BaseService(), InterfaceServiceCalls {
 
         if (commandType != 0) {
             when (commandType) {
-                STATE_INCOMING_NUMBER -> if (phoneNumber == null) {
+                STATE_INCOMING_NUMBER -> if (phoneNumber.equals("000000")) {
                     phoneNumber = getStringExtra(PHONE_NUMBER)
+                    if (phoneNumber == null)
+                        phoneNumber = "99999"
                     callType = getIntExtra(TYPE_CALL, 0)
                     Log.i(TAG, "llamada entrante $phoneNumber")
-                }
-                STATE_CALL_START -> if (phoneNumber != null) {
-                    Log.i(TAG, "llamada inicio  ")
                     interactor.startRecording(phoneNumber, callType)
+                }
+                STATE_CALL_START ->
+                    if (phoneNumber.equals("000000")) {
+                        phoneNumber = "99999"
+                    Log.i(TAG, "llamada inicio  ")
+
                 }
                 STATE_CALL_END -> {
                     Log.i(TAG, "llamada fin ")
-                    phoneNumber = null
+                    phoneNumber = "000000"
                     interactor.stopRecording()
                 }
             }
