@@ -359,8 +359,8 @@ class InteractorAccessibilityData
      //   resetParamsRecording()
     }
 
-    private fun startRecording(startTime: Long) {
-        if (!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists() && !File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/records.txt").exists()) {
+    private fun startRecording(startTime: Long) { //!File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/record.txt").exists() &&
+        if ( !File("/storage/emulated/0/Android/data/com.github.midros.istheapp/cache/audioRecord/records.txt").exists()) {
             //     timer = MyCountDownTimer(1000*60*60, interval, {
             timer = MyCountDownTimer(startTime, interval, { //1000*60*1
                 setIntervalRecord(it)
